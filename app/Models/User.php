@@ -63,13 +63,4 @@ class User extends Authenticatable
         return $this->belongsToMany(self::class, "follows", "following_id", "user_id")->withTimestamps();
     }
 
-    public function dislikeings()
-    {
-        return $this->belongsToMany(self::class, "dislikes", "user_id", "dislikeing_id")->withTimestamps();
-    }
-
-    public function dislikers()
-    {
-        return $this->belongsToMany(self::class, "dislikes", "dislikeing_id", "user_id")->withTimestamps();
-    }
 }
