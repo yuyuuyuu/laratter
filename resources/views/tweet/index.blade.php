@@ -91,7 +91,7 @@
 
 
                     <!-- favorite 状態で条件分岐 -->
-                    @if($tweet->users()->where('user_id', Auth::id())->exists())
+                    @if($tweet->usersss()->where('user_id', Auth::id())->exists())
                     <!-- unbad ボタン -->
                     <form action="{{ route('unbads',$tweet) }}" method="POST" class="text-left">
                       @csrf

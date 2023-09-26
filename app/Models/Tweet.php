@@ -27,16 +27,11 @@ class Tweet extends Model
 
   public function users()
   {
-    return $this->belongsToMany(User::class)->withTimestamps();
-  }
-
-    public function userss()
-  {
-    return $this->belongsTo(User::class);
+    return $this->belongsToMany(User::class, 'tweet_user', 'tweet_id', 'user_id')->withTimestamps();
   }
 
     public function usersss()
   {
-    return $this->belongsToMany(User::class)->withTimestamps();
+    return $this->belongsToMany(User::class, 'tweet_user2', 'tweet_id', 'user_id')->withTimestamps();
   }
 }
