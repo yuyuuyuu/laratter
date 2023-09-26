@@ -4,9 +4,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TweetController;
 use App\Http\Controllers\FavoriteController;
-use App\Http\Controllers\DislikeController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\BadController;
 
 // コメントは省略
 
@@ -20,6 +20,8 @@ Route::middleware('auth')->group(function () {
   Route::post('user/{user}/unfollow', [FollowController::class, 'destroy'])->name('unfollow');
   Route::post('tweet/{tweet}/favorites', [FavoriteController::class, 'store'])->name('favorites');
   Route::post('tweet/{tweet}/unfavorites', [FavoriteController::class, 'destroy'])->name('unfavorites');
+  Route::post('tweet/{tweet}/bads', [BadController::class, 'store'])->name('bads');
+  Route::post('tweet/{tweet}/unbads', [BadController::class, 'destroy'])->name('unbads');
   Route::get('/tweet/mypage', [TweetController::class, 'mydata'])->name('tweet.mypage');
   Route::resource('tweet', TweetController::class);
 });
