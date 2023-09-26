@@ -29,4 +29,14 @@ class Tweet extends Model
   {
     return $this->belongsToMany(User::class)->withTimestamps();
   }
+
+    public function userss()
+  {
+    return $this->belongsTo(User::class);
+  }
+
+    public function usersss()
+  {
+    return $this->belongsToMany(User::class)->withTimestamps();
+  }
 }

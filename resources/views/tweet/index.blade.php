@@ -2,11 +2,13 @@
 
 <x-app-layout>
   <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-400 leading-tight">
+    <h2 class="font-semibold text-xl text-gray-200 leading-tight">
       @if (Request::routeIs('tweet.mypage'))
       {{ __('Mypage') }}
-      @else()
+      @elseif (Request::routeIs('tweet.index'))
       {{ __('Tweet Index') }}
+      @else()
+      {{ __('Timeline') }}
       @endif
     </h2>
   </x-slot>
@@ -85,6 +87,35 @@
                       </x-primary-button>
                     </form>
                     @endif
+
+
+
+                    <!-- favorite 状態で条件分岐 -->
+                    @if($tweet->users()->where('user_id', Auth::id())->exists())
+                    <!-- unbad ボタン -->
+                    <form action="{{ route('unbads',$tweet) }}" method="POST" class="text-left">
+                      @csrf
+                      <x-primary-button class="ml-3">
+                        <svg class="h-6 w-6 text-red-500" fill="red" viewBox="0 0 24 24" stroke="red">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                        {{ $tweet->usersss()->count() }}
+                      </x-primary-button>
+                    </form>
+                    @else
+                    <!-- bad ボタン -->
+                    <form action="{{ route('bads',$tweet) }}" method="POST" class="text-left">
+                      @csrf
+                      <x-primary-button class="ml-3">
+                        <svg class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="gray">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                        {{ $tweet->usersss()->count() }}
+                      </x-primary-button>
+                    </form>
+                    @endif
+
+
 
                     <!-- 条件分岐でログインしているユーザが投稿したtweetのみ編集ボタンと削除ボタンが表示される -->
                     @if ($tweet->user_id === Auth::user()->id)
