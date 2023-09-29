@@ -48,6 +48,13 @@
             {{ __('Search') }}
           </x-nav-link>
         </div>
+
+        <!-- 🔽 DM画面へのリンクを追加 -->
+        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+          <x-nav-link :href="route('tweet.direct')" :active="request()->routeIs('tweet.direct')">
+            {{ __('DM') }}
+          </x-nav-link>
+        </div>
       </div>
 
       <!-- Settings Dropdown -->
@@ -130,6 +137,13 @@
     <div class="pt-2 pb-3 space-y-1">
       <x-responsive-nav-link :href="route('search.input')" :active="request()->routeIs('search.input')">
         {{ __('Search') }}
+      </x-responsive-nav-link>
+    </div>
+
+    <!-- 🔽 DMページへのリンクを追加 -->
+    <div class="pt-2 pb-3 space-y-1">
+      <x-responsive-nav-link :href="route('tweet.direct')" :active="request()->routeIs('tweet.index')">
+        {{ __('DM') }}
       </x-responsive-nav-link>
     </div>
 
