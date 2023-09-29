@@ -24,7 +24,7 @@
             </div>
             <div class="flex flex-col mb-4">
                 <x-input-label for="dm" :value="__('Message')" />
-                <x-text-input id="dm" class="block mt-1 w-full" type="text" name="dm" :value="old('dm')" required autofocus />
+                <x-text-input id="dm" class="block mt-1 w-full" type="text" name="dm" :value="old('dm')" />
                 <x-input-error :messages="$errors->get('dm')" class="mt-2" />
             </div>
             <div class="flex items-center justify-end mt-4">
@@ -37,10 +37,13 @@
             @foreach ($messages as $message)
                 <div class="message {{ $message->user_id === auth()->id() ? 'sent' : 'received' }}">
                     @if ($message->user)
-                        <p style="color: white; font-size: 16px;">{{ $message->user->name }}</p>
+                        <p style="color: {{ $message->user_id === auth()->id() ? 'gray' : 'white' }}; font-size: 16px;">{{ $message->user->name }}</p>
                     @endif
-                    <p style="color: white; font-size: 24px;{{ $message->user_id === auth()->id() ? 'color: white;' : '' }}">{{ $message->dm }}</p>
+                    <p style="color: {{ $message->user_id === auth()->id() ? 'gray' : 'white' }}; font-size: 24px;">{{ $message->dm }}</p>
                     <p class="timestamp" style="color: white; font-size: 14px;">{{ $message->created_at->format('Y-m-d H:i:s') }}</p>
+                    
+                    <!-- アンダーライン -->
+                    <hr style="border: none; border-top: 1px solid white; margin-top: 10px;">
                 </div>
             @endforeach
         </div>

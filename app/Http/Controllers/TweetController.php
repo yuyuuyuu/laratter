@@ -135,16 +135,26 @@ class TweetController extends Controller
 
     public function direct()
     {
+        // ログインしているユーザーのIDとセッションで保存されているIDを取得
+        $loggedInUserId = auth()->id();
+        $selectedUserId = session('selected_user');
+
         // メッセージ一覧を取得
-        $messages = Message::where('user_id', auth()->id())
-                            ->orWhere('recieving_id', auth()->id())
-                            ->orderBy('created_at')
-                            ->get();
+        $messages = Message::where(function ($query) use ($loggedInUserId, $selectedUserId) {
+            $query->where('user_id', $loggedInUserId)
+                ->where('recieving_id', $selectedUserId);
+        })->orWhere(function ($query) use ($loggedInUserId, $selectedUserId) {
+            $query->where('user_id', $selectedUserId)
+                ->where('recieving_id', $loggedInUserId);
+        })
+        ->orderBy('created_at')
+        ->get();
 
         // ユーザー名リストを取得
         $userNames = User::pluck('name', 'id');
 
         return response()->view('tweet.direct', compact('messages', 'userNames'));
     }
+
 
 }
