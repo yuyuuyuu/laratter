@@ -7,14 +7,17 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\BadController;
+use App\Http\Controllers\MessageController;
 
 // コメントは省略
 
 // 🔽 ここを編集
 Route::middleware('auth')->group(function () {
+  Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
   Route::get('/tweet/search/input', [SearchController::class, 'create'])->name('search.input');
   Route::get('/tweet/search/result', [SearchController::class, 'index'])->name('search.result');
   Route::get('/tweet/timeline', [TweetController::class, 'timeline'])->name('tweet.timeline');
+  Route::get('/tweet/direct', [TweetController::class, 'direct'])->name('tweet.direct');
   Route::get('user/{user}', [FollowController::class, 'show'])->name('follow.show');
   Route::post('user/{user}/follow', [FollowController::class, 'store'])->name('follow');
   Route::post('user/{user}/unfollow', [FollowController::class, 'destroy'])->name('unfollow');

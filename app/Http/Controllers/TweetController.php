@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Models\Tweet;
 use App\Models\User;
+use App\Models\Message;
 use Auth;
 
 
@@ -132,5 +133,18 @@ class TweetController extends Controller
         return view('tweet.index', compact('tweets'));
     }
 
+    public function direct()
+    {
+        // メッセージ一覧を取得
+        $messages = Message::where('user_id', auth()->id())
+                            ->orWhere('recieving_id', auth()->id())
+                            ->orderBy('created_at')
+                            ->get();
+
+        // ユーザー名リストを取得
+        $userNames = User::pluck('name', 'id');
+
+        return response()->view('tweet.direct', compact('messages', 'userNames'));
+    }
 
 }
