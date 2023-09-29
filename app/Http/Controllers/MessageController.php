@@ -34,12 +34,17 @@ class MessageController extends Controller
     {
         $request->validate([
             'recieving_id' => 'required|exists:users,id',
-            'dm' => 'required|string',
+            'dm' => 'nullable|string', // 'nullable'
         ]);
 
-        // メッセージをデータベースに保存
-        $data = $request->merge(['user_id' => Auth::user()->id])->all();
-        $result = Message::create($data);
+        // メッセージを取得
+        $dm = $request->input('dm');
+
+        // dm が null でない場合にメッセージをデータベースに保存
+        if ($dm !== null) {
+            $data = $request->merge(['user_id' => Auth::user()->id])->all();
+            $result = Message::create($data);
+        }
 
         // 選択したユーザーをセッションに保存
         session(['selected_user' => $request->input('recieving_id')]);
@@ -47,6 +52,7 @@ class MessageController extends Controller
         // メッセージ送信後のリダイレクトなどを行う
         return redirect()->route('tweet.direct');
     }
+
 
     /**
      * Display the specified resource.
